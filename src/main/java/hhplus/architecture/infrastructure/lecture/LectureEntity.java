@@ -40,7 +40,7 @@ public class LectureEntity {
 
     public static Lecture to(LectureEntity lectureEntity) {
         return new Lecture(
-            lectureEntity.id, lectureEntity.user.getId(), lectureEntity.name,
+            lectureEntity.id, lectureEntity.user.getId(), lectureEntity.name, lectureEntity.user.getName(),
             lectureEntity.startDateTime, lectureEntity.endDateTime
         );
     }
