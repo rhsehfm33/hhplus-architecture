@@ -3,8 +3,10 @@ package hhplus.architecture.infrastructure.lecture;
 import java.time.LocalDateTime;
 
 import hhplus.architecture.domain.lecture.Lecture;
+import hhplus.architecture.infrastructure.user.UserEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,8 @@ public class LectureEntity {
     @Id
     private long id;
 
-    private long userId;
+    @OneToOne
+    private UserEntity user;
 
     private String name;
 
@@ -25,20 +28,20 @@ public class LectureEntity {
 
     LocalDateTime endDateTime;
 
-    public static LectureEntity from(LectureParams lectureParams) {
+    public static LectureEntity from(LectureParams lectureParams, UserEntity user) {
         LectureEntity lecture = new LectureEntity();
         lecture.id = lectureParams.lectureId();
         lecture.name = lectureParams.name();
-        lecture.userId = lectureParams.teacherId();
         lecture.startDateTime = lectureParams.startDateTime();
         lecture.endDateTime = lectureParams.endDateTime();
+        lecture.user = user;
         return lecture;
     }
 
     public static Lecture to(LectureEntity lectureEntity) {
         return new Lecture(
-            lectureEntity.getId(), lectureEntity.getUserId(), lectureEntity.getName(),
-            lectureEntity.getStartDateTime(), lectureEntity.getEndDateTime()
+            lectureEntity.id, lectureEntity.user.getId(), lectureEntity.name,
+            lectureEntity.startDateTime, lectureEntity.endDateTime
         );
     }
 }

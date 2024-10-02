@@ -7,6 +7,7 @@ import hhplus.architecture.infrastructure.lecture.LectureEntity;
 import hhplus.architecture.infrastructure.user.UserEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,23 +20,19 @@ public class LectureRegistrationEntity {
     @Id
     private long id;
 
-    private long lectureId;
+    @ManyToOne
+    private LectureEntity lecture;
 
-    private long userId;
+    @ManyToOne
+    private UserEntity user;
 
     LocalDateTime createdAt;
 
-    public LectureRegistrationEntity(long lectureId, long userId, LocalDateTime createdAt) {
-        this.lectureId = lectureId;
-        this.userId = userId;
-        this.createdAt = createdAt;
-    }
-
-    public static LectureRegistrationEntity from(LectureRegistrationParams lectureRegistrationParams) {
+    public static LectureRegistrationEntity from(LectureEntity lecture, UserEntity user, LocalDateTime createdAt) {
         LectureRegistrationEntity lectureRegistrationEntity = new LectureRegistrationEntity();
-        lectureRegistrationEntity.lectureId = lectureRegistrationParams.lectureId();
-        lectureRegistrationEntity.userId = lectureRegistrationParams.userId();
-        lectureRegistrationEntity.createdAt = lectureRegistrationParams.createdAt();
+        lectureRegistrationEntity.lecture = lecture;
+        lectureRegistrationEntity.user = user;
+        lectureRegistrationEntity.createdAt = createdAt;
         return lectureRegistrationEntity;
     }
 

@@ -11,6 +11,7 @@ import hhplus.architecture.infrastructure.lecture.LectureEntity;
 import hhplus.architecture.infrastructure.lecture.LectureJpaRepository;
 import hhplus.architecture.infrastructure.user.UserEntity;
 import hhplus.architecture.infrastructure.user.UserJpaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Repository
@@ -22,9 +23,15 @@ public class LectureRegistrationRepositoryImpl implements LectureRegistrationRep
 
     @Override
     public void save(long lectureId, long userId, LocalDateTime createdAt) {
-        LectureRegistrationEntity lectureRegistrationEntity =
-            new LectureRegistrationEntity(lectureId, userId, createdAt);
-        lectureRegistrationJpaRepository.save(lectureRegistrationEntity);
+        LectureEntity lectureEntity = lectureJpaRepository.findById(lectureId).orElseThrow(
+            () -> new EntityNotFoundException("존재하지 않는 특강입니다.")
+        );
+        UserEntity userEntity = userJpaRepository.findById(userId).orElseThrow(
+            () -> new EntityNotFoundException("존재하지 않는 유저입니다.")
+        );
+        lectureRegistrationJpaRepository.save(
+            LectureRegistrationEntity.from(lectureEntity, userEntity, createdAt)
+        );
     }
 
     @Override
