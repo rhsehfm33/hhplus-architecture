@@ -1,6 +1,7 @@
 package hhplus.architecture.domain.registration;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -47,5 +48,17 @@ public class LectureRegistrationService {
 
         // 특강 신청 저장
         lectureRegistrationRepository.save(lectureId, userId, createdAt);
+    }
+
+    public List<LectureRegistrationInfo> getRegisteredLecturesByUserId(long userId) {
+        return lectureRegistrationRepository.findAllByUserId(userId).stream()
+            .map(lectureRegistration -> new LectureRegistrationInfo(
+                lectureRegistration.id(),
+                lectureRegistration.lecture().id(),
+                lectureRegistration.user().id(),
+                lectureRegistration.lecture().lectureName(),
+                lectureRegistration.user().name(),
+                lectureRegistration.createdAt()
+            )).toList();
     }
 }

@@ -1,6 +1,7 @@
 package hhplus.architecture.infrastructure.registration;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
@@ -55,5 +56,16 @@ public class LectureRegistrationRepositoryImpl implements LectureRegistrationRep
     @Override
     public int countByLectureId(long lectureId) {
         return lectureRegistrationJpaRepository.countByLectureId(lectureId);
+    }
+
+    @Override
+    public List<LectureRegistration> findAllByUserId(long userId) {
+        return lectureRegistrationJpaRepository.findAllByUserId(userId).stream()
+            .map(lectureRegistrationEntity -> new LectureRegistration(
+                lectureRegistrationEntity.getId(),
+                LectureEntity.to(lectureRegistrationEntity.getLecture()),
+                UserEntity.to(lectureRegistrationEntity.getUser()),
+                lectureRegistrationEntity.getCreatedAt()
+            )).toList();
     }
 }
