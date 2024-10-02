@@ -2,5 +2,8 @@ package hhplus.architecture.domain.registration;
 
 import java.time.LocalDateTime;
 
-public record LectureRegistration(long registrationId, long lectureId, long userId, LocalDateTime createdAt) {
+import hhplus.architecture.domain.lecture.Lecture;
+import hhplus.architecture.domain.user.User;
+
+public record LectureRegistration(long id, Lecture lecture, User user, LocalDateTime createdAt) {
 }
