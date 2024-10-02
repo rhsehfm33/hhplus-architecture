@@ -20,6 +20,12 @@ public class LectureRegistrationRepositoryImpl implements LectureRegistrationRep
     private final UserJpaRepository userJpaRepository;
     private final LectureJpaRepository lectureJpaRepository;
 
+    @Override
+    public void save(long lectureId, long userId, LocalDateTime createdAt) {
+        LectureRegistrationEntity lectureRegistrationEntity =
+            new LectureRegistrationEntity(lectureId, userId, createdAt);
+        lectureRegistrationJpaRepository.save(lectureRegistrationEntity);
+    }
 
     @Override
     public Optional<LectureRegistration> findByLectureIdAndUserId(long lectureId, long userId) {
@@ -37,5 +43,10 @@ public class LectureRegistrationRepositoryImpl implements LectureRegistrationRep
         );
 
         return Optional.of(lectureRegistration);
+    }
+
+    @Override
+    public int countByLectureId(long lectureId) {
+        return lectureRegistrationJpaRepository.countByLectureId(lectureId);
     }
 }
