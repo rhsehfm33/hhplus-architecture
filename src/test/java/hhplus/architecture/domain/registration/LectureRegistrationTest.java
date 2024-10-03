@@ -47,8 +47,8 @@ public class LectureRegistrationTest {
 
         // lecture 더미 데이터 세팅
         lecture = new Lecture(1L, 1L, "l1", "u1", time.minusMinutes(30), time.plusMinutes(30));
-        when(lectureRepository.findLectureById(anyLong())).thenReturn(Optional.empty());
-        lenient().when(lectureRepository.findLectureById(1L)).thenReturn(Optional.of(lecture));
+        when(lectureRepository.findLectureIdWithWriteLock(anyLong())).thenReturn(Optional.empty());
+        lenient().when(lectureRepository.findLectureIdWithWriteLock(1L)).thenReturn(Optional.of(lecture));
 
         // user 더미 데이터 세팅
         user = new User(1L, "user1@gmail.com", "user1_password", "user1");
@@ -73,7 +73,7 @@ public class LectureRegistrationTest {
 
     @Test
     public void registerLecture_AlreadyRegistered_IllegalArgumentException() {
-        when(lectureRegistrationRepository.findByLectureIdAndUserId(user.id(), lecture.id()))
+        when(lectureRegistrationRepository.findByLectureIdAndUserId(lecture.id(), user.id()))
             .thenReturn(Optional.of(lectureRegistration));
 
         assertThrows(IllegalArgumentException.class,
@@ -82,7 +82,7 @@ public class LectureRegistrationTest {
 
     @Test
     public void registerLecture_FullyRegistered_IllegalStateException() {
-        when(lectureRegistrationRepository.findByLectureIdAndUserId(user.id(), lecture.id()))
+        when(lectureRegistrationRepository.findByLectureIdAndUserId(lecture.id(), user.id()))
             .thenReturn(Optional.empty());
         when(lectureRegistrationRepository.countByLectureId(lecture.id()))
             .thenReturn(LectureRegistrationService.MAX_REGISTRATION);
@@ -94,7 +94,7 @@ public class LectureRegistrationTest {
     @Test
     public void registerLecture_LectureOutdated_IllegalArgumentException() {
         Lecture lecture2 = new Lecture(2L, user.id(), "l1", "u1", time.minusDays(2), time.minusSeconds(1));
-        lenient().when(lectureRepository.findLectureById(lecture2.id())).thenReturn(Optional.of(lecture2));
+        lenient().when(lectureRepository.findLectureIdWithWriteLock(lecture2.id())).thenReturn(Optional.of(lecture2));
 
         when(lectureRegistrationRepository.countByLectureId(lecture2.id()))
             .thenReturn(0);
@@ -105,7 +105,7 @@ public class LectureRegistrationTest {
 
     @Test
     public void registerLecture_Success() {
-        when(lectureRegistrationRepository.findByLectureIdAndUserId(user.id(), lecture.id()))
+        when(lectureRegistrationRepository.findByLectureIdAndUserId(lecture.id(), user.id()))
             .thenReturn(Optional.empty());
         when(lectureRegistrationRepository.countByLectureId(lecture.id()))
             .thenReturn(LectureRegistrationService.MAX_REGISTRATION - 1);
