@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class LectureRegistrationService {
-    public final int MAX_REGISTRATION = 30;
+    public static final int MAX_REGISTRATION = 30;
     private final UserRepository userRepository;
     private final LectureRepository lectureRepository;
     private final LectureRegistrationRepository lectureRegistrationRepository;
