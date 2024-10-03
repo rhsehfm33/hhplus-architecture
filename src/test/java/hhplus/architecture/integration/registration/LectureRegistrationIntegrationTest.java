@@ -8,7 +8,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +38,6 @@ public class LectureRegistrationIntegrationTest {
     private LectureRegistrationRepository lectureRegistrationRepository;
 
     @Test
-    @Order(1)
     void registerLecture_31Times_30LectureRegistrations() throws InterruptedException {
         LocalDateTime now = LocalDateTime.now();
 
