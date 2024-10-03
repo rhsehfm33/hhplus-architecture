@@ -42,7 +42,7 @@ public class LectureRegistrationService {
         }
 
         LocalDateTime createdAt = LocalDateTime.now();
-        if (createdAt.isBefore(lecture.startDate()) || createdAt.isAfter(lecture.endDateTime())) {
+        if (createdAt.isBefore(lecture.startTime()) || createdAt.isAfter(lecture.endTime())) {
             throw new IllegalArgumentException("현재 해당 특강은 신청할 수 없습니다.");
         }
 
