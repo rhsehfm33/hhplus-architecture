@@ -53,7 +53,6 @@ public class LectureRegistrationService {
     public List<LectureRegistrationInfo> getRegisteredLecturesByUserId(long userId) {
         return lectureRegistrationRepository.findAllByUserId(userId).stream()
             .map(lectureRegistration -> new LectureRegistrationInfo(
-                lectureRegistration.id(),
                 lectureRegistration.lecture().id(),
                 lectureRegistration.user().id(),
                 lectureRegistration.lecture().lectureName(),

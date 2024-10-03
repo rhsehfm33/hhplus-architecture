@@ -62,7 +62,6 @@ public class LectureRegistrationRepositoryImpl implements LectureRegistrationRep
     public List<LectureRegistration> findAllByUserId(long userId) {
         return lectureRegistrationJpaRepository.findAllByUserId(userId).stream()
             .map(lectureRegistrationEntity -> new LectureRegistration(
-                lectureRegistrationEntity.getId(),
                 LectureEntity.to(lectureRegistrationEntity.getLecture()),
                 UserEntity.to(lectureRegistrationEntity.getUser()),
                 lectureRegistrationEntity.getCreatedAt()
