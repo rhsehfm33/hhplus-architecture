@@ -5,6 +5,6 @@ import java.util.Optional;
 import hhplus.architecture.infrastructure.user.UserParams;
 
 public interface UserRepository {
-    User saveUser(UserParams user);
+    User save(UserParams user);
     Optional<User> findUserById(Long id);
 }
