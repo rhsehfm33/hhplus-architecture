@@ -23,9 +23,9 @@ public class LectureRegistrationService {
     private final LectureRegistrationRepository lectureRegistrationRepository;
 
     public void registerLecture(long lectureId, long userId) {
-        // TODO: 비관적 락 구현 필요
         // 신청 가능한지 검사
-        Lecture lecture = lectureRepository.findLectureById(lectureId).orElseThrow(
+        // 비관적 락을 트랜잭션 처음에 걸어 동시성 제어
+        Lecture lecture = lectureRepository.findLectureIdWithWriteLock(lectureId).orElseThrow(
             () -> new EntityNotFoundException("존재하지 않는 특강입니다.")
         );
         userRepository.findUserById(userId).orElseThrow(

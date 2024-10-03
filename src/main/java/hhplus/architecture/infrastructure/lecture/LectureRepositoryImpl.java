@@ -31,4 +31,9 @@ public class LectureRepositoryImpl implements LectureRepository {
         return lectureJpaRepository.findLecturesContainingDateTime(time)
             .stream().map(LectureEntity::to).toList();
     }
+
+    @Override
+    public Optional<Lecture> findLectureIdWithWriteLock(Long id) {
+        return lectureJpaRepository.findLectureForUpdateById(id).map(LectureEntity::to);
+    }
 }
