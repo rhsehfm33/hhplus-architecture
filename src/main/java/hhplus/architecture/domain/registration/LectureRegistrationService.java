@@ -37,7 +37,7 @@ public class LectureRegistrationService {
         if (lectureRegistration.isPresent()) {
             throw new IllegalArgumentException("이미 신청한 특강입니다.");
         }
-        if (lectureRegistrationRepository.countByLectureId(lectureId) > MAX_REGISTRATION) {
+        if (lectureRegistrationRepository.countByLectureId(lectureId) >= MAX_REGISTRATION) {
             throw new IllegalStateException("신청 마감된 특강입니다.");
         }
 
