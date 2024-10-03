@@ -56,7 +56,7 @@ public class LectureRegistrationTest {
         lenient().when(userRepository.findUserById(1L)).thenReturn(Optional.of(user));
 
         // 특강 신청 더미 데이터 세팅
-        lectureRegistration = new LectureRegistration(1L, lecture, user, time);
+        lectureRegistration = new LectureRegistration(lecture, user, time);
     }
 
     @Test
@@ -122,7 +122,7 @@ public class LectureRegistrationTest {
     @Test
     public void getRegisteredLecturesByUserId_Success() {
         when(lectureRegistrationRepository.findAllByUserId(user.id()))
-            .thenReturn(List.of(new LectureRegistration(1L, lecture, user, time)));
+            .thenReturn(List.of(new LectureRegistration(lecture, user, time)));
         assertEquals(1, lectureRegistrationService.getRegisteredLecturesByUserId(user.id()).size());
     }
 }
