@@ -36,6 +36,7 @@ public class LectureRegistrationEntity {
 
     public static LectureRegistrationEntity from(LectureEntity lecture, UserEntity user, LocalDateTime createdAt) {
         LectureRegistrationEntity lectureRegistrationEntity = new LectureRegistrationEntity();
+        lectureRegistrationEntity.id = new LectureRegistrationId(lecture.getId(), user.getId());
         lectureRegistrationEntity.lecture = lecture;
         lectureRegistrationEntity.user = user;
         lectureRegistrationEntity.createdAt = createdAt;
