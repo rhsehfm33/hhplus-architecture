@@ -99,7 +99,7 @@ public class LectureRegistrationIntegrationTest {
         executorService.shutdown();
         assertTrue(executorService.awaitTermination(1, TimeUnit.MINUTES));
 
-        // 총 MAX_REGISTRATION 건의 특강 신청 목록이 조회 되어야 함
+        // 1건만 특강 신청 성공해야 함
         assertTrue(lectureRegistrationRepository.findByLectureIdAndUserId(1, 1).isPresent());
         assertEquals(1, successCount.get());
         assertEquals(4, failureCount.get());
