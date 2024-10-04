@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface LectureRegistrationRepository {
     void save(long lectureId, long userId, LocalDateTime createdAt);
-    Optional<LectureRegistration> findByLectureIdAndUserId(long userId, long lectureId);
+    Optional<LectureRegistration> findByLectureIdAndUserId(long lectureId, long userId);
     int countByLectureId(long lectureId);
     List<LectureRegistration> findAllByUserId(long userId);
 }
